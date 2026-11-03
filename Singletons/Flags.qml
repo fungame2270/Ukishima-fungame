@@ -115,10 +115,15 @@ Singleton {
     property alias cycleSlot5: adapter.cycleSlot5
 
     //* Expanded-pill modules: each hides one optional item from the hover row.
-    //* Everything core — workspaces, the wifi/bluetooth/battery cluster, the
-    //* clock, weather, notifications, mixer and clipboard — always draws. The
-    //* Appearance cog is deliberately not here: it is the only way into
+    //* Everything core — the workspaces, the clock and weather — always draws.
+    //* The Appearance cog is deliberately not here: it is the only way into
     //* settings, so a switch that hides it would hide the switch itself.
+    property alias pillShowWifi: adapter.pillShowWifi
+    property alias pillShowBluetooth: adapter.pillShowBluetooth
+    property alias pillShowBattery: adapter.pillShowBattery
+    property alias pillShowNotifications: adapter.pillShowNotifications
+    property alias pillShowMixer: adapter.pillShowMixer
+    property alias pillShowClipboard: adapter.pillShowClipboard
     property alias pillShowSysmon: adapter.pillShowSysmon
     property alias pillShowRecorder: adapter.pillShowRecorder
     property alias pillShowWallpaper: adapter.pillShowWallpaper
@@ -260,6 +265,12 @@ Singleton {
             property string cycleSlot5: ""
             //* Expanded-pill modules (see Flags above). All true on a fresh install,
             //* so nothing leaves the bar until asked.
+            property bool pillShowWifi: true
+            property bool pillShowBluetooth: true
+            property bool pillShowBattery: true
+            property bool pillShowNotifications: true
+            property bool pillShowMixer: true
+            property bool pillShowClipboard: true
             property bool pillShowSysmon: true
             property bool pillShowRecorder: true
             property bool pillShowWallpaper: true

@@ -12,7 +12,7 @@ import "../components"
  * strip) is a surface style now, chosen on SURFACE STYLES. Reached from the
  * Settings index and folds back to it on the back chevron or an empty click.
  *
- * The expanded pill's module switches keep their own 器 PILL MODULES
+ * The expanded pill's module switches keep their own 器 TOGGLE MODULES
  * sub-surface, linked from the `modulesTile` row below, so they do not bury
  * the clock controls; both fold back to DISPLAY on the chevron.
  *

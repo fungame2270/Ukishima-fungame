@@ -7,9 +7,9 @@ import "../components"
 
 /**
  * 器 TOGGLE MODULES sub-surface: which optional items the expanded pill's hover
- * row draws. Everything core always draws — the workspaces, the
- * wifi/bluetooth/battery cluster, the clock, weather, notifications, mixer and
- * clipboard — so these switches hide the rest.
+ * row draws. The workspaces, the clock and weather always draw, so these
+ * switches hide everything else — the wifi/bluetooth/battery cluster,
+ * notifications, mixer, clipboard and the tool modules.
  *
  * The Appearance cog is deliberately absent: it is the only way into settings,
  * and a switch that hides the only door back to itself is the one-way door the
@@ -23,6 +23,12 @@ SettingsSurface {
     implicitHeight: content.implicitHeight
 
     rows: [
+        { item: wifiRow, kind: "toggle", get: function () { return Flags.pillShowWifi; }, set: function (v) { Flags.pillShowWifi = v; } },
+        { item: btRow, kind: "toggle", get: function () { return Flags.pillShowBluetooth; }, set: function (v) { Flags.pillShowBluetooth = v; } },
+        { item: batteryRow, kind: "toggle", get: function () { return Flags.pillShowBattery; }, set: function (v) { Flags.pillShowBattery = v; } },
+        { item: notifsRow, kind: "toggle", get: function () { return Flags.pillShowNotifications; }, set: function (v) { Flags.pillShowNotifications = v; } },
+        { item: mixerRow, kind: "toggle", get: function () { return Flags.pillShowMixer; }, set: function (v) { Flags.pillShowMixer = v; } },
+        { item: clipRow, kind: "toggle", get: function () { return Flags.pillShowClipboard; }, set: function (v) { Flags.pillShowClipboard = v; } },
         { item: sysmonRow, kind: "toggle", get: function () { return Flags.pillShowSysmon; }, set: function (v) { Flags.pillShowSysmon = v; } },
         { item: recRow, kind: "toggle", get: function () { return Flags.pillShowRecorder; }, set: function (v) { Flags.pillShowRecorder = v; } },
         { item: timerRow, kind: "toggle", get: function () { return Flags.pillShowTimer; }, set: function (v) { Flags.pillShowTimer = v; } },
@@ -48,6 +54,84 @@ SettingsSurface {
         }
 
 Item { width: 1; height: 10 * root.s }
+        SettingsRow {
+            id: wifiRow
+            surface: root
+            name: "Wi-Fi"
+            icon: "wifi"
+
+            LinkToggle {
+                s: root.s
+                on: Flags.pillShowWifi
+                onToggled: Flags.pillShowWifi = !Flags.pillShowWifi
+            }
+        }
+
+        SettingsRow {
+            id: btRow
+            surface: root
+            name: "Bluetooth"
+            icon: "bluetooth"
+
+            LinkToggle {
+                s: root.s
+                on: Flags.pillShowBluetooth
+                onToggled: Flags.pillShowBluetooth = !Flags.pillShowBluetooth
+            }
+        }
+
+        SettingsRow {
+            id: batteryRow
+            surface: root
+            name: "Battery"
+            icon: "bolt"
+
+            LinkToggle {
+                s: root.s
+                on: Flags.pillShowBattery
+                onToggled: Flags.pillShowBattery = !Flags.pillShowBattery
+            }
+        }
+
+        SettingsRow {
+            id: notifsRow
+            surface: root
+            name: "Notifications"
+            icon: "inbox"
+
+            LinkToggle {
+                s: root.s
+                on: Flags.pillShowNotifications
+                onToggled: Flags.pillShowNotifications = !Flags.pillShowNotifications
+            }
+        }
+
+        SettingsRow {
+            id: mixerRow
+            surface: root
+            name: "Mixer"
+            icon: "mixer"
+
+            LinkToggle {
+                s: root.s
+                on: Flags.pillShowMixer
+                onToggled: Flags.pillShowMixer = !Flags.pillShowMixer
+            }
+        }
+
+        SettingsRow {
+            id: clipRow
+            surface: root
+            name: "Clipboard"
+            icon: "clipboard"
+
+            LinkToggle {
+                s: root.s
+                on: Flags.pillShowClipboard
+                onToggled: Flags.pillShowClipboard = !Flags.pillShowClipboard
+            }
+        }
+
         SettingsRow {
             id: sysmonRow
             surface: root

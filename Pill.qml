@@ -2395,13 +2395,15 @@ Item {
 
                 Row {
                     anchors.verticalCenter: parent.verticalCenter
-                    visible: pill.wifiDev !== null || pill.btAdapter !== null || Battery.present
+                    visible: (Flags.pillShowWifi && pill.wifiDev !== null)
+                        || (Flags.pillShowBluetooth && pill.btAdapter !== null)
+                        || (Flags.pillShowBattery && Battery.present)
                     spacing: 12 * pill.s
 
                     Item {
                         id: wifiIcon
                         anchors.verticalCenter: parent.verticalCenter
-                        visible: pill.wifiDev !== null
+                        visible: Flags.pillShowWifi && pill.wifiDev !== null
                         width: 15 * pill.s
                         height: 15 * pill.s
 
@@ -2436,7 +2438,7 @@ Item {
                     Item {
                         id: btIcon
                         anchors.verticalCenter: parent.verticalCenter
-                        visible: pill.btAdapter !== null
+                        visible: Flags.pillShowBluetooth && pill.btAdapter !== null
                         width: 15 * pill.s
                         height: 15 * pill.s
 
@@ -2471,7 +2473,7 @@ Item {
                     Item {
                         id: batteryIcon
                         anchors.verticalCenter: parent.verticalCenter
-                        visible: Battery.present
+                        visible: Flags.pillShowBattery && Battery.present
                         width: battPct.implicitWidth
                         height: 17 * pill.s
 
@@ -2502,6 +2504,7 @@ Item {
                 Item {
                     id: inboxIcon
                     anchors.verticalCenter: parent.verticalCenter
+                    visible: Flags.pillShowNotifications
                     width: 17 * pill.s
                     height: 17 * pill.s
 
@@ -2544,6 +2547,7 @@ Item {
                 Item {
                     id: mixerIcon
                     anchors.verticalCenter: parent.verticalCenter
+                    visible: Flags.pillShowMixer
                     width: 17 * pill.s
                     height: 17 * pill.s
 
@@ -2701,6 +2705,7 @@ Item {
                 Item {
                     id: clipboardIcon
                     anchors.verticalCenter: parent.verticalCenter
+                    visible: Flags.pillShowClipboard
                     width: 17 * pill.s
                     height: 17 * pill.s
 
