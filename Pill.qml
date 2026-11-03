@@ -298,6 +298,17 @@ Item {
     readonly property real restH: 38 * s
 
     /**
+     * Unread bell on both resting faces. It obeys the Notifications module
+     * switch on purpose: hiding the inbox icon in the expanded bar should
+     * silence the resting alert too, not leave a bell with no way to open it.
+     * The numeral stands in for the dot marker the hover bell uses so the count
+     * reads at a glance; past nine it caps at "9+" to stay inside the pill.
+     */
+    readonly property bool showNotifBell: Flags.pillShowNotifications && Notifs.unread > 0
+    readonly property string notifBellCount: Notifs.unread > 99 ? "99+" : String(Notifs.unread)
+    readonly property real notifBellW: 15 * s
+
+    /**
      * Strip-face geometry: a compact top-centre notch pill. Its width is
      * computed explicitly (not from the row's implicit width) so the media
      * title can be elided to exactly what the budget allows; on a 1920px
@@ -331,6 +342,7 @@ Item {
     readonly property real stripTitleW: stripMedia ? Math.min(stripMaxTitle, stripRoomForTitle, Math.max(stripMinTitle, stripTitleMetrics.advanceWidth)) : 0
     readonly property real stripFixedW: stripDay.implicitWidth + stripTime.implicitWidth
         + stripWs.implicitWidth + stripLay.implicitWidth + stripBat.implicitWidth
+        + (pill.showNotifBell ? pill.notifBellW + pill.stripGap : 0)
 
     readonly property real stripFaceW: {
         let w = 2 * stripPad + stripFixedW + 4 * stripGap;
@@ -1294,6 +1306,54 @@ Item {
         }
     }
 
+    /**
+     * The resting unread bell. Shared by the minimal/classic/system row and the
+     * strip notch so both faces draw the same glyph and count. The badge hangs
+     * into the row gap on the right, so the item's layout width stays the bell
+     * alone and no neighbour needs extra padding.
+     */
+    component NotifBell: Item {
+        id: bell
+
+        property real s: 1
+        property string count: ""
+
+        implicitWidth: 15 * bell.s
+        implicitHeight: 15 * bell.s
+
+        GlyphIcon {
+            anchors.left: parent.left
+            anchors.verticalCenter: parent.verticalCenter
+            width: 15 * bell.s
+            height: 15 * bell.s
+            name: "inbox"
+            color: Theme.cream
+            stroke: 1.7
+        }
+
+        Rectangle {
+            anchors.top: parent.top
+            anchors.right: parent.right
+            anchors.topMargin: -4 * bell.s
+            anchors.rightMargin: -5 * bell.s
+            height: 9 * bell.s
+            width: Math.max(9 * bell.s, countText.implicitWidth + 4 * bell.s)
+            radius: height / 2
+            color: Theme.flameGlow
+
+            Text {
+                id: countText
+                anchors.centerIn: parent
+                text: bell.count
+                color: Theme.cardTop
+                font.family: Theme.font
+                font.pixelSize: 7 * bell.s
+                font.weight: Font.Bold
+                font.features: ({ "tnum": 1 })
+            }
+        }
+    }
+
     TapHandler {
         enabled: !pill.surfaceOpen && pill.mode !== "game"
         gesturePolicy: TapHandler.WithinBounds
@@ -2024,6 +2084,13 @@ Item {
                     font.features: { "tnum": 1 }
                 }
             }
+
+            NotifBell {
+                anchors.verticalCenter: parent.verticalCenter
+                s: pill.s
+                count: pill.notifBellCount
+                visible: pill.showNotifBell
+            }
         }
 
         TextMetrics {
@@ -2210,6 +2277,13 @@ Item {
                 font.family: Theme.font
                 font.pixelSize: 16 * pill.s
                 font.weight: Font.DemiBold
+            }
+
+            NotifBell {
+                anchors.verticalCenter: parent.verticalCenter
+                s: pill.s
+                count: pill.notifBellCount
+                visible: pill.showNotifBell && pill.specialView === ""
             }
         }
     }
