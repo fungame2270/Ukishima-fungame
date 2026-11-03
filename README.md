@@ -2,6 +2,11 @@
 
 > A dynamic-island Quickshell shell for Hyprland and niri.
 
+> **Personal fork.** This is a fork of
+> [amanhex/Ukishima](https://github.com/amanhex/Ukishima), maintained for my
+> own setup. The upstream repository is the canonical project — use it for
+> installs, updates, issues and contributions.
+
 Ukishima (浮島, *"floating island"*) is a widget layer for Hyprland and niri built around a morphing pill at the top of every monitor that expands in place into a control centre, plus a floating macOS-style 泊 dock at the bottom edge for pinned and running apps. Fully self-contained — it makes no changes to your compositor configuration.
 
 ## Preview
